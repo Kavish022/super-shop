@@ -2,33 +2,40 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-16">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Company Info */}
+    <footer className="mt-20 border-t border-white/10 bg-gray-950 text-gray-400">
+      <div className="mx-auto max-w-7xl px-4 py-12">
+
+        {/* Top Section */}
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+          
+          {/* Brand */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">SuperCom</h3>
-            <p className="text-sm">
-              Your trusted online store for quality products and excellent customer service.
+            <h3 className="text-lg font-semibold text-white tracking-tight">
+              SuperCom
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed">
+              A modern e-commerce platform delivering quality products with fast and secure checkout.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Shop */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Shop</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wide">
+              Shop
+            </h4>
+            <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <Link href="/shop/products" className="hover:text-primary transition">
+                <Link href="/products" className="hover:text-white transition">
                   All Products
                 </Link>
               </li>
               <li>
-                <Link href="/shop/cart" className="hover:text-primary transition">
-                  Shopping Cart
+                <Link href="/cart" className="hover:text-white transition">
+                  Cart
                 </Link>
               </li>
               <li>
-                <Link href="/shop/checkout" className="hover:text-primary transition">
+                <Link href="/checkout" className="hover:text-white transition">
                   Checkout
                 </Link>
               </li>
@@ -37,16 +44,18 @@ const Footer = () => {
 
           {/* Account */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Account</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wide">
+              Account
+            </h4>
+            <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <Link href="/auth/login" className="hover:text-primary transition">
+                <Link href="/auth/login" className="hover:text-white transition">
                   Login
                 </Link>
               </li>
               <li>
-                <Link href="/auth/register" className="hover:text-primary transition">
-                  Register
+                <Link href="/auth/register" className="hover:text-white transition">
+                  Sign Up
                 </Link>
               </li>
             </ul>
@@ -54,31 +63,33 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2 text-sm">
-              <li>Email: info@supercom.com</li>
-              <li>Phone: 1-800-SUPERCOM</li>
-              <li>Address: 123 Commerce St, Tech City</li>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wide">
+              Contact
+            </h4>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>info@supercom.com</li>
+              <li>1-800-SUPERCOM</li>
+              <li>123 Commerce St, Tech City</li>
             </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex justify-between items-center">
-            <p className="text-sm">
-              &copy; {new Date().getFullYear()} SuperCom. All rights reserved.
-            </p>
-            <div className="flex space-x-4 text-sm">
-              <Link href="#" className="hover:text-primary transition">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="hover:text-primary transition">
-                Terms of Service
-              </Link>
-            </div>
+        {/* Bottom Section */}
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs">
+            © {new Date().getFullYear()} SuperCom. All rights reserved.
+          </p>
+
+          <div className="flex gap-6 text-xs">
+            <Link href="#" className="hover:text-white transition">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="hover:text-white transition">
+              Terms of Service
+            </Link>
           </div>
         </div>
+
       </div>
     </footer>
   );

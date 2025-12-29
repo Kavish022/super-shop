@@ -1,3 +1,7 @@
+'use server';
+
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export const metadata = {
@@ -5,7 +9,13 @@ export const metadata = {
   description: "Admin dashboard for managing SuperCom",
 };
 
-const Dashboard = () => {
+async function Dashboard() {
+  const { userId } = await auth();
+
+  if (!userId) {
+    redirect("/auth/login");
+  }
+
   return (
     <div className="container mx-auto p-4 py-12">
       <h1 className="text-4xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
@@ -53,6 +63,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Dashboard;

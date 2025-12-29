@@ -9,9 +9,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.36.5",
+    "@stripe/stripe-js": "^8.6.0",
+    "@supabase/supabase-js": "^2.89.0",
+    "lucide-react": "^0.562.0",
+    "mongoose": "^9.0.2",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "stripe": "^20.1.0"
   },
   "devDependencies": {
     "@types/node": "25.0.3",
@@ -24,4 +30,3 @@
     "typescript": "latest"
   }
 }
-

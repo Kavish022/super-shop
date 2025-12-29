@@ -171,7 +171,7 @@ const CheckoutPage = () => {
             </div>
           </div>
           <Link
-            href="/shop/cart"
+            href="/cart"
             className="mt-4 inline-block text-primary hover:underline"
           >
             ← Back to Cart

@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           ${price.toFixed(2)}
         </p>
         <Link
-          href={`/shop/products/${id}`}
+          href={`/products/${id}`}
           className="inline-block bg-primary text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-200 text-center"
         >
           View Details

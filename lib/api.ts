@@ -1,81 +1,133 @@
-// Mock API functions - Replace with your actual API calls
+// Real API calls to Next.js backend with MongoDB
 
 export interface Product {
   id: string;
+  _id?: string;
   title: string;
   image: string;
   price: number;
   description?: string;
 }
 
-// Mock product data
-const MOCK_PRODUCTS: Product[] = [
-  {
-    id: "1",
-    title: "Laptop",
-    image: "https://via.placeholder.com/300x200?text=Laptop",
-    price: 999.99,
-    description: "High-performance laptop for professionals",
-  },
-  {
-    id: "2",
-    title: "Headphones",
-    image: "https://via.placeholder.com/300x200?text=Headphones",
-    price: 199.99,
-    description: "Premium noise-canceling headphones",
-  },
-  {
-    id: "3",
-    title: "Keyboard",
-    image: "https://via.placeholder.com/300x200?text=Keyboard",
-    price: 149.99,
-    description: "Mechanical keyboard with RGB lighting",
-  },
-  {
-    id: "4",
-    title: "Mouse",
-    image: "https://via.placeholder.com/300x200?text=Mouse",
-    price: 79.99,
-    description: "Wireless mouse with precision tracking",
-  },
-];
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
 
+// Fetch all products
 export async function fetchProducts(): Promise<Product[]> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  return MOCK_PRODUCTS;
+  try {
+    const response = await fetch(`${API_BASE}/products`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch products: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    // Map MongoDB _id to id for consistent interface
+    return data.data.map((product: any) => ({
+      ...product,
+      id: product._id,
+    }));
+  } catch (error) {
+    console.error('fetchProducts error:', error);
+    return [];
+  }
 }
 
+// Fetch single product by ID
 export async function fetchProduct(id: string): Promise<Product | null> {
-  await new Promise((resolve) => setTimeout(resolve, 200));
-  return MOCK_PRODUCTS.find((p) => p.id === id) || null;
+  try {
+    const response = await fetch(`${API_BASE}/products/${id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch product: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return {
+      ...data.data,
+      id: data.data._id,
+    };
+  } catch (error) {
+    console.error('fetchProduct error:', error);
+    return null;
+  }
 }
 
-export async function createProduct(product: Omit<Product, "id">): Promise<Product> {
-  await new Promise((resolve) => setTimeout(resolve, 200));
-  const newProduct: Product = {
-    ...product,
-    id: Math.random().toString(36).substr(2, 9),
-  };
-  MOCK_PRODUCTS.push(newProduct);
-  return newProduct;
+// Create new product
+export async function createProduct(
+  product: Omit<Product, 'id' | '_id'>
+): Promise<Product> {
+  try {
+    const response = await fetch(`${API_BASE}/products`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to create product: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return {
+      ...data.data,
+      id: data.data._id,
+    };
+  } catch (error) {
+    console.error('createProduct error:', error);
+    throw error;
+  }
 }
 
+// Update product
 export async function updateProduct(
   id: string,
   product: Partial<Product>
 ): Promise<Product | null> {
-  await new Promise((resolve) => setTimeout(resolve, 200));
-  const index = MOCK_PRODUCTS.findIndex((p) => p.id === id);
-  if (index === -1) return null;
-  MOCK_PRODUCTS[index] = { ...MOCK_PRODUCTS[index], ...product };
-  return MOCK_PRODUCTS[index];
+  try {
+    const response = await fetch(`${API_BASE}/products/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update product: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return {
+      ...data.data,
+      id: data.data._id,
+    };
+  } catch (error) {
+    console.error('updateProduct error:', error);
+    return null;
+  }
 }
 
+// Delete product
 export async function deleteProduct(id: string): Promise<boolean> {
-  await new Promise((resolve) => setTimeout(resolve, 200));
-  const index = MOCK_PRODUCTS.findIndex((p) => p.id === id);
-  if (index === -1) return false;
-  MOCK_PRODUCTS.splice(index, 1);
-  return true;
+  try {
+    const response = await fetch(`${API_BASE}/products/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete product: ${response.statusText}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error('deleteProduct error:', error);
+    return false;
+  }
 }
