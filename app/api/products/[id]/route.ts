@@ -4,15 +4,20 @@ import { supabase } from '@/lib/supabase';
 interface RouteParams {
   params: {
     id: string;
-  };
+  } | Promise<{ id: string }>;
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+async function resolveParams(params: RouteParams['params']) {
+  return (await Promise.resolve(params)) as { id: string };
+}
+
+export async function GET(request: NextRequest, context: RouteParams) {
   try {
+    const { id } = await resolveParams(context.params);
     const { data, error } = await supabase
       .from('products')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (error) {
@@ -35,14 +40,15 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(request: NextRequest, context: RouteParams) {
   try {
     const body = await request.json();
 
+    const { id } = await resolveParams(context.params);
     const { data, error } = await supabase
       .from('products')
       .update(body)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -66,12 +72,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, context: RouteParams) {
   try {
+    const { id } = await resolveParams(context.params);
     const { data, error } = await supabase
       .from('products')
       .delete()
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
