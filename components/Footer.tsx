@@ -67,9 +67,9 @@ const Footer = () => {
               Contact
             </h4>
             <ul className="mt-4 space-y-2 text-sm">
-              <li>info@supercom.com</li>
+              <li>kavishbhatt022@gmail.com</li>
               <li>1-800-SUPERCOM</li>
-              <li>123 Commerce St, Tech City</li>
+              <li>Sup Comm</li>
             </ul>
           </div>
         </div>
